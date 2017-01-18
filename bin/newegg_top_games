@@ -1,0 +1,4 @@
+require "bundler/setup"
+require "newegg_top_games"
+
+NewEggTopGames::CLI.new.run
