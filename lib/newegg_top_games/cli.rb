@@ -23,8 +23,10 @@ class NewEggTopGames::CLI
 
 	def choose_console
 		puts ""
+		puts "************************************************************"
 		puts "Welcome to New Eggs's top selling video games (by console)!"
 		puts "Choose a console...."
+		puts "************************************************************"
 		input = nil
 		puts ""
 		
@@ -33,9 +35,10 @@ class NewEggTopGames::CLI
 			puts "#{number.to_s.yellow}. #{CONSOLE_INFO[key][:name]}"
 			number +=1
 		end
-
 		puts ""
-		print "Choose a console or type #{'exit'.red} to exit (1-8): "
+		puts "************************************************************"
+		puts ""
+		print "Choose a console or type #{'exit'.red} to exit (1-10): "
 		
 		input = gets.chomp
 
