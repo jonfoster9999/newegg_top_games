@@ -40,10 +40,10 @@ class NewEggTopGames::CLI
 		puts ""
 		input = nil
 		
-		while input != "exit"
+		while input != "EXIT"
 			print "Choose a console or type #{'exit'.red} to exit (1-10): "
 			
-			input = gets.chomp
+			input = gets.chomp.upcase
 
 			case input
 			when "1"
@@ -66,8 +66,8 @@ class NewEggTopGames::CLI
 				console_menu(CONSOLE_INFO[:vr_games])
 			when "10"
 				console_menu(CONSOLE_INFO[:pc_games])
-			when "exit"
-				exit!
+			when "EXIT"
+				exit_program
 			else
 				puts "Invalid Entry, try again...".red
 			end
@@ -78,20 +78,21 @@ class NewEggTopGames::CLI
 		list = NewEggTopGames::ConsoleTopTwentyList.new(NewEggTopGames::Console.new(console_info))
 		print_list(list)
 		input = nil
-		while input != "exit"
-			print "Which Item would you like to know more about? Type #{"'list'"} to re-list items, #{"'consoles'"} to return to consoles, or #{"'exit'".red} to exit (1-#{list.list.length}): "
-			input = gets.chomp
+		
+		while input != "EXIT"
+			print "Which Item would you like to know more about? Type 'list' to re-list items, 'consoles' to return to consoles, or #{"'exit'".red} to exit (1-#{list.list.length}): "
+			input = gets.chomp.upcase
 			if input.to_i > 0 && input.to_i <= list.list.length
 				product_page = NewEggTopGames::Scraper.product_page(list.list[input.to_i - 1])
 				present_product_page(product_page, console_info)
 			end
 			case input
-			when "consoles"
+			when "CONSOLES"
 				choose_console
-			when "list"
+			when "LIST"
 				console_menu(console_info)
-			when "exit"
-				exit!
+			when "EXIT"
+				exit_program
 			else
 				puts "Invalid Entry, try again...".red
 			end
@@ -117,16 +118,17 @@ class NewEggTopGames::CLI
 		puts "------------------"
 		puts ""
 		input = nil
-		while input != "exit"
-			print "Type #{"'back'"} to go back to the #{console_info[:name].green} list, #{"'consoles'"} to go back to the consoles, or #{"'exit'".red} to exit: "
-			input = gets.strip
+		
+		while input != "EXIT"
+			print "Type 'list' to go back to the #{console_info[:name].green} list, 'consoles' to go back to the consoles, or #{"'exit'".red} to exit: "
+			input = gets.strip.upcase
 			case input
-			when "back"
+			when "LIST"
 				console_menu(console_info)
-			when "consoles"
+			when "CONSOLES"
 				choose_console
-			when "exit"
-				exit!
+			when "EXIT"
+				exit_program
 			else
 				puts "Invalid entry, try again...".red
 			end
@@ -145,6 +147,13 @@ class NewEggTopGames::CLI
 			puts "#{number.to_s.yellow}. #{list_item.name} (#{list_item.brand.green}) #{list_item.url == nil ? "No More info".red : ""}"
 		end
 		puts ""
+	end
+
+	def exit_program
+		puts ""
+		puts "Thank you, see you next time!"
+		puts ""
+		exit!
 	end
 end
 
