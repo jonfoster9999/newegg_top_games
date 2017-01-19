@@ -2,8 +2,8 @@
 
 class NewEggTopGames::Console
 	attr_accessor :name, :url
-	def initialize(name, url)
-		@name = name
-		@url = url
+	def initialize(hash)
+		@name = hash[:name]
+		@url = hash[:url]
 	end
 end

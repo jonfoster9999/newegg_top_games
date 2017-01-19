@@ -15,7 +15,8 @@ class NewEggTopGames::ConsoleTopTwentyList
 		puts "NewEgg's top 20 selling items for #{@console.name}: "
 		puts ""
 		@list.each_with_index do |list_item, index|
-			puts "#{index + 1}. #{list_item.name} (#{list_item.brand.green}) #{list_item.url == nil ? "No More info".red : ""}"
+			number = index + 1
+			puts "#{number.to_s.blue}. #{list_item.name} (#{list_item.brand.green}) #{list_item.url == nil ? "No More info".red : ""}"
 		end
 		puts ""
 	end
