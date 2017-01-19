@@ -30,7 +30,7 @@ class NewEggTopGames::CLI
 		
 		number = 1
 		CONSOLE_INFO.each do |key, value|
-			puts "#{number.to_s.blue}. #{CONSOLE_INFO[key][:name]}"
+			puts "#{number.to_s.yellow}. #{CONSOLE_INFO[key][:name]}"
 			number +=1
 		end
 
@@ -75,7 +75,7 @@ class NewEggTopGames::CLI
 		list.print_list
 		input = nil
 		while input != "exit"
-			print "Which Item would you like to know more about? Type #{"'list'".blue} to re-list items, #{"'consoles'".blue} to return to consoles, or #{"'exit'".red} to exit (1-20): "
+			print "Which Item would you like to know more about? Type #{"'list'"} to re-list items, #{"'consoles'"} to return to consoles, or #{"'exit'".red} to exit (1-20): "
 			input = gets.chomp
 			if input.to_i > 0 && input.to_i <= 20
 				product_page = NewEggTopGames::Scraper.product_page(list.list[input.to_i - 1])
@@ -111,7 +111,7 @@ class NewEggTopGames::CLI
 		end
 		puts "------------------"
 		puts ""
-		print "Type #{"'back'".blue} to go back to the #{console_info[:name].green} list, #{"'consoles'".blue} to go back to the consoles, or #{"'exit'".red} to exit: "
+		print "Type #{"'back'"} to go back to the #{console_info[:name].green} list, #{"'consoles'"} to go back to the consoles, or #{"'exit'".red} to exit: "
 		input = gets.strip
 		case input
 		when "back"

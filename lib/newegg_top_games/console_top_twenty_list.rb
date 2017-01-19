@@ -17,7 +17,7 @@ class NewEggTopGames::ConsoleTopTwentyList
 	
 		@list.each_with_index do |list_item, index|
 			number = index + 1
-			puts "#{number.to_s.blue}. #{list_item.name} (#{list_item.brand.green}) #{list_item.url == nil ? "No More info".red : ""}"
+			puts "#{number.to_s.yellow}. #{list_item.name} (#{list_item.brand.green}) #{list_item.url == nil ? "No More info".red : ""}"
 		end
 		puts ""
 	end
