@@ -78,7 +78,7 @@ class NewEggTopGames::CLI
 		list.print_list
 		input = nil
 		while input != "exit"
-			print "Which Item would you like to know more about? Type #{"'list'"} to re-list items, #{"'consoles'"} to return to consoles, or #{"'exit'".red} to exit (1-20): "
+			print "Which Item would you like to know more about? Type #{"'list'"} to re-list items, #{"'consoles'"} to return to consoles, or #{"'exit'".red} to exit (1-#{list.list.length}): "
 			input = gets.chomp
 			if input.to_i > 0 && input.to_i <= list.list.length
 				product_page = NewEggTopGames::Scraper.product_page(list.list[input.to_i - 1])

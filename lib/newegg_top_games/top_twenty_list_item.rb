@@ -1,5 +1,5 @@
 class NewEggTopGames::TopTwentyListItem
-	attr_accessor :name, :brand, :url, :console   #A top twenty list item belongs_to a console
+	attr_accessor :name, :brand, :url
 
 	def initialize(name, brand, url)
 		@name = name
