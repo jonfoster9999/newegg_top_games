@@ -29,8 +29,8 @@ class NewEggTopGames::Scraper
 		title = doc.css('h1 span').text.strip.split(" - ")[0]
 		price = doc.css('div meta').first["content"]
 		info_array = doc.css('li.item')
-
-		
+		product_page = NewEggTopGames::ProductPage.new(title, price, info_array)
+		product_page
 	end
 
 

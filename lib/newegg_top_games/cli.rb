@@ -15,21 +15,18 @@ class NewEggTopGames::CLI
 	}
 
 	def run
-		main_menu
 		choose_console
 	end
 
-	def main_menu
-		puts ""
-		puts "Welcome to New Eggs's top selling video games (by console)!"
-		puts "Choose a console...."
-	end
 
 	def consoles 
 		@@consoles
 	end
 
 	def choose_console
+		puts ""
+		puts "Welcome to New Eggs's top selling video games (by console)!"
+		puts "Choose a console...."
 		input = nil
 		puts ""
 		puts "#{"1.".blue} Playstation 4"
@@ -41,7 +38,7 @@ class NewEggTopGames::CLI
 		puts "#{"7.".blue} VR Games"
 		puts "#{"8.".blue} PC Games"
 		puts ""
-		print "Choose a console or type 'exit' to exit: "
+		print "Choose a console or type #{'exit'.red} to exit (1-8): "
 		
 		input = gets.chomp
 
@@ -81,16 +78,53 @@ class NewEggTopGames::CLI
 	def console_menu(console_info)
 		list = NewEggTopGames::ConsoleTopTwentyList.new(NewEggTopGames::Console.new(console_info))
 		list.print_list
-		print "Which Item would you like to know more about? Type 'list' to re-list items, 'consoles' to return to consoles, or 'exit' to exit: "
+		input = nil
+		while input != "exit"
+		print "Which Item would you like to know more about? Type #{"'list'".blue} to re-list items, #{"'consoles'".blue} to return to consoles, or #{"'exit'".red} to exit (1-20): "
 		input = gets.chomp
-		if input.to_i > 0
-			NewEggTopGames::Scraper.product_page(list.list[input.to_i - 1])
+		if input.to_i > 0 && input.to_i <= 20
+			product_page = NewEggTopGames::Scraper.product_page(list.list[input.to_i - 1])
+			present_product_page(product_page, console_info)
 		end
 		case input
 		when "consoles"
 			choose_console
 		when "list"
 			console_menu(console_info)
+		when "exit"
+			exit!
+		else
+			puts "Invalid Entry..try again."
+		end
+	end
+	end
+
+	def present_product_page(product_page, console_info)
+		puts ""
+		puts "********************************************************"
+		puts "#{product_page.title}"
+		puts "********************************************************"
+		puts ""
+		puts "Price: #{"$".green}#{product_page.price.green}"
+		puts ""
+		puts "Description:"
+		puts "------------------"
+		puts ""
+		product_page.info_array.each do |item|
+			puts item.text.strip
+			puts ""
+		end
+		puts "------------------"
+		puts ""
+		print "Type #{"'back'".blue} to go back to the #{console_info[:name].green} list, #{"'consoles'".blue} to go back to the consoles, or #{"'exit'".red} to exit: "
+		input = gets.strip
+		case input
+		when "back"
+			console_menu(console_info)
+		when "consoles"
+			choose_console
+		when "exit"
+			exit!
 		end
 	end
 end
