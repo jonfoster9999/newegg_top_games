@@ -54,27 +54,43 @@ class NewEggTopGames::CLI
 				# going to need a print item method which takes the href of the corresponding list_item choice, scrapes it and prints it
 
 				#when printing the individual description we'll take a gets.chomp.to_i   and call the item to be printed by it's index 
-				NewEggTopGames::ConsoleTopTwentyList.new(NewEggTopGames::Console.new(CONSOLE_INFO[:playstation_4])).print_list
+				console_menu(CONSOLE_INFO[:playstation_4])
 			when "2"
-				NewEggTopGames::ConsoleTopTwentyList.new(NewEggTopGames::Console.new(CONSOLE_INFO[:playstation_3])).print_list
+				console_menu(CONSOLE_INFO[:playstation_3])
 			when "3"
-				NewEggTopGames::ConsoleTopTwentyList.new(NewEggTopGames::Console.new(CONSOLE_INFO[:xbox_one])).print_list
+				console_menu(CONSOLE_INFO[:xbox_one])
 			when "4"
-				NewEggTopGames::ConsoleTopTwentyList.new(NewEggTopGames::Console.new(CONSOLE_INFO[:wii])).print_list
+				console_menu(CONSOLE_INFO[:wii])
 			when "5" 
-				NewEggTopGames::ConsoleTopTwentyList.new(NewEggTopGames::Console.new(CONSOLE_INFO[:nintendo_ds])).print_list
+				console_menu(CONSOLE_INFO[:nintendo_ds])
 			when "6" 
-				NewEggTopGames::ConsoleTopTwentyList.new(NewEggTopGames::Console.new(CONSOLE_INFO[:nintendo_switch])).print_list
+				console_menu(CONSOLE_INFO[:nintendo_switch])
 			when "7"
-				NewEggTopGames::ConsoleTopTwentyList.new(NewEggTopGames::Console.new(CONSOLE_INFO[:vr_games])).print_list
+				console_menu(CONSOLE_INFO[:vr_games])
 			when "8"
-				NewEggTopGames::ConsoleTopTwentyList.new(NewEggTopGames::Console.new(CONSOLE_INFO[:pc_games])).print_list
+				console_menu(CONSOLE_INFO[:pc_games])
 			when "exit"
 				throw :exit
 			else
 				puts ("Invalid Entry, try again").red
 				choose_console
 			end
+		end
+	end
+
+	def console_menu(console_info)
+		list = NewEggTopGames::ConsoleTopTwentyList.new(NewEggTopGames::Console.new(console_info))
+		list.print_list
+		print "Which Item would you like to know more about? Type 'list' to re-list items, 'consoles' to return to consoles, or 'exit' to exit: "
+		input = gets.chomp
+		if input.to_i > 0
+			NewEggTopGames::Scraper.product_page(list.list[input.to_i - 1])
+		end
+		case input
+		when "consoles"
+			choose_console
+		when "list"
+			console_menu(console_info)
 		end
 	end
 end

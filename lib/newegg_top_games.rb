@@ -7,5 +7,6 @@ require "./lib/newegg_top_games/scraper"
 require "nokogiri"
 require "pry"
 require "colorize"
+require "open_uri_redirections"
 
 

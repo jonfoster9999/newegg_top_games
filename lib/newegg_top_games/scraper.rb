@@ -25,11 +25,29 @@ class NewEggTopGames::Scraper
 	end
 
 	def self.product_page(top_twenty_list_item)
-		url = top_twenty_list_item.url
-		doc = Nokogiri::HTML(open(url))
-		binding.pry
+		doc = Nokogiri::HTML(open(top_twenty_list_item.url, :allow_redirections => :safe))
+		title = doc.css('h1 span').text.strip.split(" - ")[0]
+		price = doc.css('div meta').first["content"]
+		info_array = doc.css('li.item')
 
+		
 	end
 
 
 end
+
+
+	#	puts ""
+	#	puts "********************************************************"
+	#	puts title
+	#	puts "********************************************************"
+	#	puts ""
+	#	puts "Price: #{"$".green}#{price.green}"
+	#	puts ""
+	#	puts "Description:"
+	#	puts "------------------"
+	#	info_array.each do |item|
+	#		puts item.text.strip
+	#		puts ""
+	#	end
+	#	puts "------------------"
