@@ -20,6 +20,7 @@ class NewEggTopGames::Scraper
 				url = nil
 			end
 			list_item = NewEggTopGames::TopTwentyListItem.new(name, brand, url)
+			list_item.console = top_twenty_list.console
 			top_twenty_list.list << list_item
 		end
 	end
@@ -29,7 +30,8 @@ class NewEggTopGames::Scraper
 		title = doc.css('h1 span').text.strip.split(" - ")[0]
 		price = doc.css('div meta').first["content"]
 		info_array = doc.css('li.item')
-		product_page = NewEggTopGames::ProductPage.new(title, price, info_array)
+		console = top_twenty_list_item.console
+		product_page = NewEggTopGames::ProductPage.new(title, price, info_array, console)
 		product_page
 	end
 

@@ -38,11 +38,13 @@ class NewEggTopGames::CLI
 		puts ""
 		puts "************************************************************"
 		puts ""
-		print "Choose a console or type #{'exit'.red} to exit (1-10): "
+		input = nil
 		
-		input = gets.chomp
+		while input != "exit"
+			print "Choose a console or type #{'exit'.red} to exit (1-10): "
+			
+			input = gets.chomp
 
-		catch :exit do
 			case input
 			when "1"
 				console_menu(CONSOLE_INFO[:playstation_4])
@@ -65,17 +67,16 @@ class NewEggTopGames::CLI
 			when "10"
 				console_menu(CONSOLE_INFO[:pc_games])
 			when "exit"
-				throw :exit
+				exit!
 			else
-				puts ("Invalid Entry, try again").red
-				choose_console
+				puts "Invalid Entry, try again...".red
 			end
 		end
 	end
 
 	def console_menu(console_info)
 		list = NewEggTopGames::ConsoleTopTwentyList.new(NewEggTopGames::Console.new(console_info))
-		list.print_list
+		print_list(list)
 		input = nil
 		while input != "exit"
 			print "Which Item would you like to know more about? Type #{"'list'"} to re-list items, #{"'consoles'"} to return to consoles, or #{"'exit'".red} to exit (1-#{list.list.length}): "
@@ -92,7 +93,7 @@ class NewEggTopGames::CLI
 			when "exit"
 				exit!
 			else
-				puts "Invalid Entry..try again."
+				puts "Invalid Entry, try again...".red
 			end
 		end
 	end
@@ -104,6 +105,7 @@ class NewEggTopGames::CLI
 		puts "********************************************************"
 		puts ""
 		puts "Price: #{"$".green}#{product_page.price.green}"
+		puts "Console: #{product_page.console.name.green}"
 		puts ""
 		puts "Description:"
 		puts "------------------"
@@ -114,16 +116,35 @@ class NewEggTopGames::CLI
 		end
 		puts "------------------"
 		puts ""
-		print "Type #{"'back'"} to go back to the #{console_info[:name].green} list, #{"'consoles'"} to go back to the consoles, or #{"'exit'".red} to exit: "
-		input = gets.strip
-		case input
-		when "back"
-			console_menu(console_info)
-		when "consoles"
-			choose_console
-		when "exit"
-			exit!
+		input = nil
+		while input != "exit"
+			print "Type #{"'back'"} to go back to the #{console_info[:name].green} list, #{"'consoles'"} to go back to the consoles, or #{"'exit'".red} to exit: "
+			input = gets.strip
+			case input
+			when "back"
+				console_menu(console_info)
+			when "consoles"
+				choose_console
+			when "exit"
+				exit!
+			else
+				puts "Invalid entry, try again...".red
+			end
 		end
+	end
+
+	def print_list(list)
+		list.get_items
+		list.list = list.list[0..19]
+		puts ""
+		puts "NewEgg's top 20 selling items for #{list.console.name}: "
+		puts "-----------------------------------------------"
+	
+		list.list.each_with_index do |list_item, index|
+			number = index + 1
+			puts "#{number.to_s.yellow}. #{list_item.name} (#{list_item.brand.green}) #{list_item.url == nil ? "No More info".red : ""}"
+		end
+		puts ""
 	end
 end
 

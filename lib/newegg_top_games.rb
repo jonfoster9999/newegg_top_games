@@ -9,6 +9,6 @@ require "nokogiri"
 require "pry"
 require "colorize"
 require "open_uri_redirections"
-\
+
 
 
