@@ -137,7 +137,7 @@ class NewEggTopGames::CLI
 		list.get_items
 		list.list = list.list[0..19]
 		puts ""
-		puts "NewEgg's top 20 selling items for #{list.console.name}: "
+		puts "NewEgg's top #{list.list.length} selling items for #{list.console.name}: "
 		puts "-----------------------------------------------"
 	
 		list.list.each_with_index do |list_item, index|
