@@ -1,5 +1,4 @@
 
-
 class NewEggTopGames::Console
 	attr_accessor :name, :url
 	def initialize(hash)
