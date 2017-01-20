@@ -34,22 +34,4 @@ class NewEggTopGames::Scraper
 		product_page = NewEggTopGames::ProductPage.new(title, price, info_array, console)
 		product_page
 	end
-
-
 end
-
-
-	#	puts ""
-	#	puts "********************************************************"
-	#	puts title
-	#	puts "********************************************************"
-	#	puts ""
-	#	puts "Price: #{"$".green}#{price.green}"
-	#	puts ""
-	#	puts "Description:"
-	#	puts "------------------"
-	#	info_array.each do |item|
-	#		puts item.text.strip
-	#		puts ""
-	#	end
-	#	puts "------------------"

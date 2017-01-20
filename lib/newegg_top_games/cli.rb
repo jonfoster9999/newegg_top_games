@@ -10,29 +10,33 @@ class NewEggTopGames::CLI
 		:xbox_one => {name: "Xbox One", url: "https://www.newegg.com/Xbox-One-Video-Games/SubCategory/ID-3218?Tid=21799&Order=BESTSELLING"},
 		:xbox_360 => {name: "Xbox 360", url: "https://www.newegg.com/Xbox-360-Games/SubCategory/ID-516?Tid=252388&Order=BESTSELLING"},
 		:wii => {name: "Wii", url: "https://www.newegg.com/Product/ProductList.aspx?Submit=ENE&N=100252378&IsNodeId=1&Description=wii%20games&name=Nintendo%20Wii%20Games&Order=BESTMATCH&isdeptsrh=1"},
+		:wii_u => {name: "Wii U", url: "https://www.newegg.com/Nintendo-Wii-U-Games/SubCategory/ID-3005?Tid=19153"},
 		:nintendo_ds => {name: "Nintendo DS", url: "https://www.newegg.com/Product/ProductList.aspx?Submit=ENE&N=100008067&IsNodeId=1&Description=nintendo%20ds%20games&name=Nintendo%20DS%20Games&Order=BESTSELLING&Pagesize=36&isdeptsrh=1"},
 		:nintendo_switch => {name: "Nintendo Switch", url: "https://www.newegg.com/Nintendo-Switch-Video-Games/SubCategory/ID-3733?Tid=252381"},
 		:vr_games => {name: "VR Games", url: "https://www.newegg.com/VR-Games/SubCategory/ID-3722?Tid=245657&Order=BESTSELLING"},
-		:pc_games => {name: "PC Games", url: "https://www.newegg.com/Product/ProductList.aspx?Submit=StoreIM&Depa=8&Category=275"}
+		:pc_games => {name: "PC Games", url: "https://www.newegg.com/Product/ProductList.aspx?Submit=StoreIM&Depa=8&Category=275"},
+		:featured_items => {name: "Featured Items", url:"https://www.newegg.com/Product/ProductList.aspx?Submit=StoreIM&Depa=8"}
 	}
 
 	def run
-		choose_console
-		open "http://www.google.com"
+		choose_console		
 	end
 
 	def choose_console
 		puts ""
-		puts "************************************************************"
-		puts "Welcome to New Eggs's top selling video games (by console)!"
-		puts "Choose a console...."
-		puts "************************************************************"
+		puts "************************************************************".colorize(:color => :yellow).colorize(:background => :light_blue)
+		puts "	 _ _  _____ __ __  ___ __ _ __ _                    ".colorize(:color => :white).colorize(:background => :light_blue)
+		puts "	| ' \\/ -_) V  V / / -_) _` / _` |                   ".colorize(:color => :white).colorize(:background => :light_blue)
+		puts "	|_||_\\___|\\_/\\_/  \\___\\__, \\__, |  top games        ".colorize(:color => :white).colorize(:background => :light_blue)
+        puts "                              |___/|___/                    ".colorize(:color => :white).colorize(:background => :light_blue)
+		puts "************************************************************".colorize(:color => :yellow).colorize(:background => :light_blue)
 		input = nil
 		puts ""
 		
 		number = 1
 		CONSOLE_INFO.each do |key, value|
-			puts "#{number.to_s.yellow}. #{CONSOLE_INFO[key][:name]}"
+			spacer = number.to_s.length < 2 ? "  " : " "
+			puts "#{number.to_s.yellow}.#{spacer}#{CONSOLE_INFO[key][:name]}"
 			number +=1
 		end
 		puts ""
@@ -41,7 +45,7 @@ class NewEggTopGames::CLI
 		input = nil
 		
 		while input != "EXIT"
-			print "Choose a console or type #{'exit'.red} to exit (1-10): "
+			print "Choose a console or type #{'exit'.red} to exit (1-#{CONSOLE_INFO.keys.length}): "
 			
 			input = gets.chomp.upcase
 
@@ -59,13 +63,17 @@ class NewEggTopGames::CLI
 			when "6"
 				console_menu(CONSOLE_INFO[:wii])
 			when "7" 
-				console_menu(CONSOLE_INFO[:nintendo_ds])
+				console_menu(CONSOLE_INFO[:wii_u])
 			when "8" 
+				console_menu(CONSOLE_INFO[:nintendo_ds])
+			when "9" 
 				console_menu(CONSOLE_INFO[:nintendo_switch])
-			when "9"
-				console_menu(CONSOLE_INFO[:vr_games])
 			when "10"
+				console_menu(CONSOLE_INFO[:vr_games])
+			when "11"
 				console_menu(CONSOLE_INFO[:pc_games])
+			when "12"
+				console_menu(CONSOLE_INFO[:featured_items])
 			when "EXIT"
 				exit_program
 			else
@@ -100,15 +108,16 @@ class NewEggTopGames::CLI
 	end
 
 	def present_product_page(product_page, console_info)
+		price = product_page.price.split('.')[1].length == 1 ? product_page.price + "0" : product_page.price
 		puts ""
 		puts "********************************************************"
 		puts "#{product_page.title}"
 		puts "********************************************************"
 		puts ""
-		puts "Price: #{"$".green}#{product_page.price.green}"
+		puts "Price:   #{"$".green}#{price.green}"
 		puts "Console: #{product_page.console.name.green}"
 		puts ""
-		puts "Description:"
+		puts "Description:".light_blue
 		puts "------------------"
 		puts ""
 		product_page.info_array.each do |item|
@@ -136,15 +145,16 @@ class NewEggTopGames::CLI
 	end
 
 	def print_list(list)
-		list.get_items
-		list.list = list.list[0..19]
+		list.get_items 						#populates the list's list_array
+		list.list = list.list[0..19] 		#truncates the array down to 20 items
 		puts ""
-		puts "NewEgg's top #{list.list.length} selling items for #{list.console.name}: "
+		puts "NewEgg's top #{list.list.length.to_s.green} selling items for #{list.console.name.green}: "
 		puts "-----------------------------------------------"
 	
 		list.list.each_with_index do |list_item, index|
 			number = index + 1
-			puts "#{number.to_s.yellow}. #{list_item.name} (#{list_item.brand.green}) #{list_item.url == nil ? "No More info".red : ""}"
+			spacer = number.to_s.length < 2 ? "  " : " "
+			puts "#{number.to_s}.#{spacer}#{list_item.name} (#{list_item.brand}) #{list_item.url == nil ? "No More info".red : ""}"
 		end
 		puts ""
 	end
@@ -153,7 +163,7 @@ class NewEggTopGames::CLI
 		puts ""
 		puts "Thank you, see you next time!"
 		puts ""
-		exit!
+		exit
 	end
 end
 

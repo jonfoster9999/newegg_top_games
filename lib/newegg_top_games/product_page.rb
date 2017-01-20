@@ -1,6 +1,3 @@
-
-
-
 class NewEggTopGames::ProductPage
 	attr_accessor :title, :price, :info_array, :console
 
