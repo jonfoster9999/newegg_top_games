@@ -7,6 +7,7 @@ class NewEggTopGames::ConsoleTopTwentyList
 	def initialize(console)
 		@console = console
 		@list = [] #has many list items
+		@console.top_twenty_lists << self
 	end
 
 	def get_items

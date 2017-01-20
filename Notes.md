@@ -10,9 +10,6 @@ Pick a console:
 Choose a number or type "exit" to exit:
 
 
-
-
-
 Playstation 4's Twenty Top Selling Items:
 
 1. Attack On Titan (Tecmo)

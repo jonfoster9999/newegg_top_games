@@ -1,4 +1,4 @@
-class NewEggTopGames::ProductPage
+class NewEggTopGames::Game
 	attr_accessor :title, :price, :info_array, :console
 
 	def initialize(title, price, info_array, console)

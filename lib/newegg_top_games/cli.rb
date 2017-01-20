@@ -94,6 +94,7 @@ class NewEggTopGames::CLI
 				product_page = NewEggTopGames::Scraper.product_page(list.list[input.to_i - 1])
 				present_product_page(product_page, console_info)
 			end
+			
 			case input
 			when "CONSOLES"
 				choose_console
