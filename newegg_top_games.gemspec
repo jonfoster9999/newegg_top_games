@@ -2,6 +2,10 @@
 lib = File.expand_path('../lib', __FILE__)
 $LOAD_PATH.unshift(lib) unless $LOAD_PATH.include?(lib)
 require 'newegg_top_games/version'
+require 'uri'
+
+
+
 
 Gem::Specification.new do |spec|
   spec.name          = "newegg_top_games"
@@ -9,15 +13,15 @@ Gem::Specification.new do |spec|
   spec.authors       = ["Jon foster"]
   spec.email         = ["redcabinny@gmail.com"]
 
-  spec.summary       = "Summary coming later."
-  spec.description   = "Description coming later."
-  spec.homepage      = "http://www.aclefproductions.com"
+  spec.summary       = "A CLI for viewing the top selling games on newegg.com."
+  spec.description   = "A CLI for viewing the top selling games on newegg.com."
+  spec.homepage      = 'https://github.com/jonfoster9999/newegg_top_gam'
   spec.license       = "MIT"
 
   # Prevent pushing this gem to RubyGems.org. To allow pushes either set the 'allowed_push_host'
   # to allow pushing to a single host or delete this section to allow pushing to any host.
   if spec.respond_to?(:metadata)
-    spec.metadata['allowed_push_host'] = "'http://mygemserver.com'"
+    spec.metadata['allowed_push_host'] = 'http://mygemserver.com'
   else
     raise "RubyGems 2.0 or newer is required to protect against " \
       "public gem pushes."
@@ -29,6 +33,8 @@ Gem::Specification.new do |spec|
   spec.bindir        = "exe"
   spec.executables   = spec.files.grep(%r{^exe/}) { |f| File.basename(f) }
   spec.require_paths = ["lib"]
+
+
 
   spec.add_development_dependency "bundler", "~> 1.13"
   spec.add_development_dependency "rake", "~> 10.0"
