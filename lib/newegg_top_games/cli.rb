@@ -32,7 +32,6 @@ class NewEggTopGames::CLI
 		puts "************************************************************".colorize(:color => :yellow).colorize(:background => :light_blue)
 		input = nil
 		puts ""
-		
 		number = 1
 		CONSOLE_INFO.each do |key, value|
 			spacer = number.to_s.length < 2 ? "  " : " "
@@ -50,6 +49,7 @@ class NewEggTopGames::CLI
 			input = gets.chomp.upcase
 
 			case input
+			
 			when "1"
 				console_menu(CONSOLE_INFO[:playstation_4])
 			when "2"
@@ -83,10 +83,10 @@ class NewEggTopGames::CLI
 	end
 
 	def console_menu(console_info)
-		list = NewEggTopGames::ConsoleTopTwentyList.new(NewEggTopGames::Console.new(console_info))
+		console = NewEggTopGames::Console.new(console_info)
+		list = NewEggTopGames::ConsoleTopTwentyList.new(console)
 		print_list(list)
 		input = nil
-		
 		while input != "EXIT"
 			print "Which Item would you like to know more about? Type 'list' to re-list items, 'consoles' to return to consoles, or #{"'exit'".red} to exit (1-#{list.list.length}): "
 			input = gets.chomp.upcase
@@ -108,20 +108,21 @@ class NewEggTopGames::CLI
 		end
 	end
 
-	def present_product_page(product_page, console_info)
-		price = product_page.price.split('.')[1].length == 1 ? product_page.price + "0" : product_page.price
+	def present_product_page(game, console_info)
+		price = game.price.split('.')[1].length == 1 ? game.price + "0" : game.price
+		console_name = game.console.name
 		puts ""
 		puts "********************************************************"
-		puts "#{product_page.title}"
+		puts "#{game.title}"
 		puts "********************************************************"
 		puts ""
 		puts "Price:   #{"$".green}#{price.green}"
-		puts "Console: #{product_page.console.name.green}"
+		puts "Console: #{console_name.green}"
 		puts ""
 		puts "Description:".light_blue
 		puts "------------------"
 		puts ""
-		product_page.info_array.each do |item|
+		game.info_array.each do |item|
 			puts item.text.strip
 			puts ""
 		end
@@ -130,7 +131,7 @@ class NewEggTopGames::CLI
 		input = nil
 		
 		while input != "EXIT"
-			print "Type 'list' to go back to the #{console_info[:name].green} list, 'consoles' to go back to the consoles, or #{"'exit'".red} to exit: "
+			print "Type 'list' to go back to the #{console_name.green} list, 'consoles' to go back to the consoles, or #{"'exit'".red} to exit: "
 			input = gets.strip.upcase
 			case input
 			when "LIST"
@@ -147,7 +148,7 @@ class NewEggTopGames::CLI
 
 	def print_list(list)
 		list.get_items 						#populates the list's list_array
-		list.list = list.list[0..19] 		#truncates the array down to 20 items
+		list.list = list.list[0..29] 		#truncates the array down to 20 items
 		puts ""
 		puts "NewEgg's top #{list.list.length.to_s.green} selling items for #{list.console.name.green}: "
 		puts "-----------------------------------------------"
