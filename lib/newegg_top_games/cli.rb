@@ -3,20 +3,20 @@ require './lib/newegg_top_games'
 
 class NewEggTopGames::CLI
 
-	CONSOLE_INFO = {
-		:playstation_4 => {name: "Playstation 4", url: "https://www.newegg.com/Product/ProductList.aspx?Submit=ENE&N=100021831&IsNodeId=1&Description=playstation%204&name=PS4%20Video%20Games&Order=BESTSELLING&Pagesize=36&isdeptsrh=1" },
-		:playstation_3 => {name: "Playstation 3", url: "https://www.newegg.com/PS3-Video-Games/SubCategory/ID-545?Tid=252383"},
-		:playstation_2 => {name: "Playstation 2", url: "https://www.newegg.com/PS2-Games/SubCategory/ID-475?Tid=8097"},
-		:xbox_one => {name: "Xbox One", url: "https://www.newegg.com/Xbox-One-Video-Games/SubCategory/ID-3218?Tid=21799&Order=BESTSELLING"},
-		:xbox_360 => {name: "Xbox 360", url: "https://www.newegg.com/Xbox-360-Games/SubCategory/ID-516?Tid=252388&Order=BESTSELLING"},
-		:wii => {name: "Wii", url: "https://www.newegg.com/Product/ProductList.aspx?Submit=ENE&N=100252378&IsNodeId=1&Description=wii%20games&name=Nintendo%20Wii%20Games&Order=BESTMATCH&isdeptsrh=1"},
-		:wii_u => {name: "Wii U", url: "https://www.newegg.com/Nintendo-Wii-U-Games/SubCategory/ID-3005?Tid=19153"},
-		:nintendo_ds => {name: "Nintendo DS", url: "https://www.newegg.com/Product/ProductList.aspx?Submit=ENE&N=100008067&IsNodeId=1&Description=nintendo%20ds%20games&name=Nintendo%20DS%20Games&Order=BESTSELLING&Pagesize=36&isdeptsrh=1"},
-		:nintendo_switch => {name: "Nintendo Switch", url: "https://www.newegg.com/Nintendo-Switch-Video-Games/SubCategory/ID-3733?Tid=252381"},
-		:vr_games => {name: "VR Games", url: "https://www.newegg.com/VR-Games/SubCategory/ID-3722?Tid=245657&Order=BESTSELLING"},
-		:pc_games => {name: "PC Games", url: "https://www.newegg.com/Product/ProductList.aspx?Submit=StoreIM&Depa=8&Category=275"},
-		:featured_items => {name: "Featured Items", url:"https://www.newegg.com/Product/ProductList.aspx?Submit=StoreIM&Depa=8"}
-	}
+	CONSOLE_INFO = [
+		{name: "Playstation 4", url: "https://www.newegg.com/Product/ProductList.aspx?Submit=ENE&N=100021831&IsNodeId=1&Description=playstation%204&name=PS4%20Video%20Games&Order=BESTSELLING&Pagesize=36&isdeptsrh=1" },
+		{name: "Playstation 3", url: "https://www.newegg.com/PS3-Video-Games/SubCategory/ID-545?Tid=252383"},
+		{name: "Playstation 2", url: "https://www.newegg.com/PS2-Games/SubCategory/ID-475?Tid=8097"},
+		{name: "Xbox One", url: "https://www.newegg.com/Xbox-One-Video-Games/SubCategory/ID-3218?Tid=21799&Order=BESTSELLING"},
+		{name: "Xbox 360", url: "https://www.newegg.com/Xbox-360-Games/SubCategory/ID-516?Tid=252388&Order=BESTSELLING"},
+		{name: "Wii", url: "https://www.newegg.com/Product/ProductList.aspx?Submit=ENE&N=100252378&IsNodeId=1&Description=wii%20games&name=Nintendo%20Wii%20Games&Order=BESTMATCH&isdeptsrh=1"},
+		{name: "Wii U", url: "https://www.newegg.com/Nintendo-Wii-U-Games/SubCategory/ID-3005?Tid=19153"},
+		{name: "Nintendo DS", url: "https://www.newegg.com/Product/ProductList.aspx?Submit=ENE&N=100008067&IsNodeId=1&Description=nintendo%20ds%20games&name=Nintendo%20DS%20Games&Order=BESTSELLING&Pagesize=36&isdeptsrh=1"},
+		{name: "Nintendo Switch", url: "https://www.newegg.com/Nintendo-Switch-Video-Games/SubCategory/ID-3733?Tid=252381"},
+		{name: "VR Games", url: "https://www.newegg.com/VR-Games/SubCategory/ID-3722?Tid=245657&Order=BESTSELLING"},
+		{name: "PC Games", url: "https://www.newegg.com/Product/ProductList.aspx?Submit=StoreIM&Depa=8&Category=275"},
+		{name: "Featured Items", url:"https://www.newegg.com/Product/ProductList.aspx?Submit=StoreIM&Depa=8"}
+	]
 
 	def run
 		choose_console		
@@ -33,49 +33,28 @@ class NewEggTopGames::CLI
 		input = nil
 		puts ""
 		number = 1
-		CONSOLE_INFO.each do |key, value|
-			spacer = number.to_s.length < 2 ? "  " : " "
-			puts "#{number.to_s.yellow}.#{spacer}#{CONSOLE_INFO[key][:name]}"
-			number +=1
-		end
+		CONSOLE_INFO.each do |console|
+		 	spacer = number.to_s.length < 2 ? "  " : " "
+		 	puts "#{number.to_s.yellow}.#{spacer}#{console[:name]}"
+		 	number +=1
+		 end
 		puts ""
 		puts "************************************************************"
 		puts ""
 		input = nil
 		
 		while input != "EXIT"
-			print "Choose a console or type #{'exit'.red} to exit (1-#{CONSOLE_INFO.keys.length}): "
-			
-			input = gets.chomp.upcase
-
-			case input
-			
-			when "1"
-				console_menu(CONSOLE_INFO[:playstation_4])
-			when "2"
-				console_menu(CONSOLE_INFO[:playstation_3])
-			when "3"
-				console_menu(CONSOLE_INFO[:playstation_2])
-			when "4"
-				console_menu(CONSOLE_INFO[:xbox_one])
-			when "5"
-				console_menu(CONSOLE_INFO[:xbox_360])
-			when "6"
-				console_menu(CONSOLE_INFO[:wii])
-			when "7" 
-				console_menu(CONSOLE_INFO[:wii_u])
-			when "8" 
-				console_menu(CONSOLE_INFO[:nintendo_ds])
-			when "9" 
-				console_menu(CONSOLE_INFO[:nintendo_switch])
-			when "10"
-				console_menu(CONSOLE_INFO[:vr_games])
-			when "11"
-				console_menu(CONSOLE_INFO[:pc_games])
-			when "12"
-				console_menu(CONSOLE_INFO[:featured_items])
-			when "EXIT"
+			print "Choose a console or type #{'exit'.red} to exit (1-#{CONSOLE_INFO.length}): "			
+			input = gets.chomp.downcase
+			if input == "exit"
 				exit_program
+			else
+				index = input.to_i - 1
+			end
+			console = CONSOLE_INFO[index]
+
+			if console
+				console_menu(console)
 			else
 				puts "Invalid Entry, try again...".red
 			end
@@ -148,7 +127,7 @@ class NewEggTopGames::CLI
 
 	def print_list(list)
 		list.get_items 						#populates the list's list_array
-		list.list = list.list[0..29] 		#truncates the array down to 20 items
+		list.list = list.list[0..24] 		#truncates the array down to 20 items
 		puts ""
 		puts "NewEgg's top #{list.list.length.to_s.green} selling items for #{list.console.name.green}: "
 		puts "-----------------------------------------------"
