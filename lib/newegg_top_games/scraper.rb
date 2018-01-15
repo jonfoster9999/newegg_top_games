@@ -12,11 +12,11 @@ class NewEggTopGames::Scraper
 			name = item.css('.item-title').text.strip
 			begin
 				brand = item.css('.item-brand img').attr("title").text
-			rescue 
+			rescue
 				brand = "No brand given"
 			end
 			begin
-				url = "http:#{item.css('.item-info a.item-title').first.attr("href")}"
+				url = "#{item.css('.item-info a.item-title').first.attr("href")}"
 			rescue
 				url = nil
 			end
